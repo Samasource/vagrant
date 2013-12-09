@@ -43,10 +43,18 @@ $ bundle exec veewee vbox export heroku
 $ vagrant box add heroku heroku.box
 ```
 
+You can create a Samasource CI box with these commands.
+
+```bash
+$ bundle exec veewee vbox build samaci
+$ bundle exec veewee vbox export samaci
+$ vagrant box add samaci samaci.box
+```
+
 Now all you have to do is setup vagrant in your project.
 
 ```bash
-$ vagrant init heroku
+$ vagrant init [heroku|heroku-2x|samaci]
 $ vagrant up
 $ vagrant ssh
 ```
@@ -56,10 +64,8 @@ $ vagrant ssh
 The packages that are included are carefully selected to closely match those on
 the Celadon Cedar stack.
 
-* Ubuntu 10.04 64bit
-* Ruby 2.0.0-p247 MRI
-* RubyGems 2.0.3
+* Ubuntu 10.04 64bit for heroku boxes, Ubuntu 12.04 for CI boxes
+* Ruby 1.9.3-p484 MRI
 * Python with pip, virtualenv, and virtualenvwrapper
-* PostgreSQL 9.2.4
-* NodeJS 0.4.7
+* PostgreSQL 9.1.10
 * Foreman https://github.com/ddollar/foreman

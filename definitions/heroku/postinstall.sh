@@ -22,26 +22,30 @@ sed -i -e 's/%admin ALL=(ALL) ALL/%admin ALL=NOPASSWD:ALL/g' /etc/sudoers
 # Install NFS client
 apt-get -y install nfs-common
 
-# Install Ruby from source in /opt so that users of Vagrant
-# can install their own Rubies using packages or however.
-wget http://ftp.ruby-lang.org/pub/ruby/2.0/ruby-2.0.0-p247.tar.bz2
-tar jxf ruby-2.0.0-p247.tar.bz2
-cd ruby-2.0.0-p247
-./configure --prefix=/opt/ruby
-make
-make install
-cd ..
-rm -rf ruby-2.0.0-p247*
-chown -R root:admin /opt/ruby
-chmod -R g+w /opt/ruby
+# Install RVM, because that's how we roll at Samasource!
+curl -sSL https://get.rvm.io | bash -s stable --ruby=ruby-1.9.3-p484
+rvm install ruby-1.9.3-p327
 
-# Install RubyGems 2.0.3
-wget http://production.cf.rubygems.org/rubygems/rubygems-2.0.3.tgz
-tar xzf rubygems-2.0.3.tgz
-cd rubygems-2.0.3
-/opt/ruby/bin/ruby setup.rb
-cd ..
-rm -rf rubygems-2.0.3*
+# # Install Ruby from source in /opt so that users of Vagrant
+# # can install their own Rubies using packages or however.
+# wget http://ftp.ruby-lang.org/pub/ruby/2.0/ruby-2.0.0-p247.tar.bz2
+# tar jxf ruby-2.0.0-p247.tar.bz2
+# cd ruby-2.0.0-p247
+# ./configure --prefix=/opt/ruby
+# make
+# make install
+# cd ..
+# rm -rf ruby-2.0.0-p247*
+# chown -R root:admin /opt/ruby
+# chmod -R g+w /opt/ruby
+# 
+# # Install RubyGems 2.0.3
+# wget http://production.cf.rubygems.org/rubygems/rubygems-2.0.3.tgz
+# tar xzf rubygems-2.0.3.tgz
+# cd rubygems-2.0.3
+# /opt/ruby/bin/ruby setup.rb
+# cd ..
+# rm -rf rubygems-2.0.3*
 
 # Installing chef & Puppet
 /opt/ruby/bin/gem install chef --no-ri --no-rdoc
